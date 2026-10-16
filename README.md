@@ -60,14 +60,14 @@ Esquema `Wallet`:
 
 ```json
 {
-  "wallet_id": "3f2b8c1e-9a4d-4e6f-b7c2-1d5e8f9a0b12",
+  "wallet_id": "wallet_cf10a55826d141a7",
   "status": "active",
   "payments_enabled": false,
   "createdAt": "2026-10-16T14:51:04.886-05:00"
 }
 ```
 
-- `wallet_id`: UUID v4 generado por el sistema.
+- `wallet_id`: identificador con formato `wallet_` seguido de 16 caracteres hexadecimales (23 caracteres en total), generado por el proveedor BCP.
 - `payments_enabled`: `true` solo si la última verificación KYC está `approved`.
 
 Con curl:
