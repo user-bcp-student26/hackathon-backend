@@ -44,3 +44,33 @@ Para exponerlo con ngrok: `ngrok http 8090`.
 curl.exe -s -H "Content-Type: application/json" -d "@body.json" https://opulently-crowd-watch.ngrok-free.dev/users
 curl.exe -s -u "correo@example.com:password123" -X POST https://opulently-crowd-watch.ngrok-free.dev/auth/login
 ```
+
+### Endpoint `/wallet`
+
+Requiere autenticación Basic Auth (`email` / `password`) del usuario.
+
+| Método | Descripción | Respuestas |
+|--------|-------------|------------|
+| `GET /wallet` | Obtiene la wallet del usuario autenticado. | `200` wallet · `401` no autenticado · `404` el usuario aún no tiene wallet |
+| `POST /wallet` | Genera la wallet del usuario autenticado (relación 1 a 1). No requiere KYC aprobado. | `201` wallet creada en estado `active` · `401` no autenticado · `409` el usuario ya tiene wallet |
+
+Esquema `Wallet`:
+
+```json
+{
+  "wallet_id": "3f2b8c1e-9a4d-4e6f-b7c2-1d5e8f9a0b12",
+  "status": "active",
+  "payments_enabled": false,
+  "createdAt": "2026-10-16T14:51:04.886-05:00"
+}
+```
+
+- `wallet_id`: UUID v4 generado por el sistema.
+- `payments_enabled`: `true` solo si la última verificación KYC está `approved`.
+
+Con curl:
+
+```powershell
+curl.exe -s -u "correo@example.com:password123" https://opulently-crowd-watch.ngrok-free.dev/wallet
+curl.exe -s -u "correo@example.com:password123" -X POST https://opulently-crowd-watch.ngrok-free.dev/wallet
+```
